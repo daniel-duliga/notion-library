@@ -1,0 +1,1 @@
+# notion-igdb-sync
