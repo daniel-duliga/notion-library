@@ -19,14 +19,7 @@ namespace NotionLibrary
             bool quit = false;
             while (!quit)
             {
-                var option = Prompt.Select(
-                    "Select option",
-                    new string[]
-                    {
-                        "Video Games",
-                        "Quit"
-                    }
-                );
+                var option = Prompt.Select("Select option", new string[] { "Video Games", "Quit" });
                 switch (option)
                 {
                     case "Video Games":
