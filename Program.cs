@@ -1,16 +1,54 @@
-﻿using IGDBNotionSync.IGDB;
-using IGDBNotionSync.Notion;
-using IGDBNotionSync.Twitch;
+﻿using Microsoft.Extensions.Configuration;
+using NotionLibrary.IGDB;
+using NotionLibrary.Notion;
+using NotionLibrary.Twitch;
 using Sharprompt;
 
-namespace IGDBNotionSync
+namespace NotionLibrary
 {
     internal class Program
     {
         static async Task Main(string[] args)
         {
-            Console.WriteLine("Notion <-> IGDB");
+            IConfiguration Configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .Build();
 
+            Console.WriteLine("Notion Library");
+            Console.WriteLine("--------------");
+            bool quit = false;
+            while (!quit)
+            {
+                var option = Prompt.Select(
+                    "Select option",
+                    new string[]
+                    {
+                        "Video Games",
+                        "Quit"
+                    }
+                );
+                switch (option)
+                {
+                    case "Video Games":
+                        {
+                            await ProcessVideoGames();
+                            break;
+                        }
+                    case "Quit":
+                        {
+                            quit = true;
+                            break;
+                        }
+                    default:
+                        {
+                            break;
+                        }
+                }
+            }
+        }
+
+        private static async Task ProcessVideoGames()
+        {
             var notionService = new NotionService("");
             var twitchClientId = "";
             var twitchService = new TwitchService("", "");
@@ -21,12 +59,10 @@ namespace IGDBNotionSync
             if (notionGames == null || notionGames.Count == 0)
             {
                 Console.WriteLine("No games to process");
-                Environment.Exit(0);
+                return;
             }
-            else
-            {
-                Console.WriteLine($"Processing {notionGames.Count} games...");
-            }
+            
+            Console.WriteLine($"Processing {notionGames.Count} games...");
 
             var allGameModes = await igdbService.GetAllGameModes();
             var allGenres = await igdbService.GetAllGenres();
@@ -56,15 +92,15 @@ namespace IGDBNotionSync
                 var gameModes = allGameModes?
                     .Where(x => matchingGame.game_modes != null && matchingGame.game_modes.Contains(x.id))
                     .Select(x => x.name.Replace(",", " /"));
-                
+
                 var genres = allGenres?
                     .Where(x => matchingGame.genres != null && matchingGame.genres.Contains(x.id))
                     .Select(x => x.name.Replace(",", " /"));
-                
+
                 var perspectives = allPerspectives?
                     .Where(x => matchingGame.player_perspectives != null && matchingGame.player_perspectives.Contains(x.id))
                     .Select(x => x.name.Replace(",", " /"));
-                
+
                 var themes = allThemes?
                     .Where(x => matchingGame.themes != null && matchingGame.themes.Contains(x.id))
                     .Select(x => x.name.Replace(",", " /"));

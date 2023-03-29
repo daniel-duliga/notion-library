@@ -1,4 +1,4 @@
-﻿namespace IGDBNotionSync.IGDB
+﻿namespace NotionLibrary.IGDB
 {
     internal class VideoGame
     {

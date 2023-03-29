@@ -1,11 +1,11 @@
-﻿using IGDBNotionSync.Notion.Models;
+﻿using NotionLibrary.Notion.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Dynamic;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace IGDBNotionSync.Notion
+namespace NotionLibrary.Notion
 {
     internal class NotionService
     {

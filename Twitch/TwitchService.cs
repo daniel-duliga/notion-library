@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace IGDBNotionSync.Twitch
+namespace NotionLibrary.Twitch
 {
     internal class TwitchService
     {

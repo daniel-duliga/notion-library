@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace IGDBNotionSync.Notion.Models
+namespace NotionLibrary.Notion.Models
 {
     internal class PaginatedResponse
     {

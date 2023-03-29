@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Net.Http.Headers;
 
-namespace IGDBNotionSync.IGDB
+namespace NotionLibrary.IGDB
 {
     internal class IgdbService
     {

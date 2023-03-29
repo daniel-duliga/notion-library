@@ -1,7 +1,7 @@
 ﻿using CsvHelper;
 using System.Globalization;
 
-namespace IGDBNotionSync.CSV
+namespace NotionLibrary.CSV
 {
     internal class CsvService
     {
