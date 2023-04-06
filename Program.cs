@@ -8,9 +8,11 @@ namespace NotionLibrary
 {
     internal class Program
     {
+        static IConfiguration Configuration { get; set; }
+        
         static async Task Main(string[] args)
         {
-            IConfiguration Configuration = new ConfigurationBuilder()
+            Configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .Build();
 
@@ -42,13 +44,12 @@ namespace NotionLibrary
 
         private static async Task ProcessVideoGames()
         {
-            var notionService = new NotionService("");
-            var twitchClientId = "";
-            var twitchService = new TwitchService("", "");
+            var notionService = new NotionService(Configuration["NotionAccessToken"]);
+            var twitchService = new TwitchService(Configuration["TwitchClientId"], Configuration["TwitchClientSecret"]);
             var twitchAccessToken = await twitchService.GetAccessToken();
-            var igdbService = new IgdbService(twitchClientId, twitchAccessToken);
+            var igdbService = new IgdbService(Configuration["TwitchClientId"], twitchAccessToken);
 
-            var notionGames = await notionService.GetAllPages("");
+            var notionGames = await notionService.GetAllPages(Configuration["NotionPageId"]);
             if (notionGames == null || notionGames.Count == 0)
             {
                 Console.WriteLine("No games to process");
